@@ -1,0 +1,73 @@
+<html>
+<body>
+
+<div id="decoded_result">waiting for qr code</div>
+
+    <video autoplay></video>
+    <script type="text/javascript" src="src/grid.js"></script>
+    <script type="text/javascript" src="src/version.js"></script>
+    <script type="text/javascript" src="src/detector.js"></script>
+    <script type="text/javascript" src="src/formatinf.js"></script>
+    <script type="text/javascript" src="src/errorlevel.js"></script>
+    <script type="text/javascript" src="src/bitmat.js"></script>
+    <script type="text/javascript" src="src/datablock.js"></script>
+    <script type="text/javascript" src="src/bmparser.js"></script>
+    <script type="text/javascript" src="src/datamask.js"></script>
+    <script type="text/javascript" src="src/rsdecoder.js"></script>
+    <script type="text/javascript" src="src/gf256poly.js"></script>
+    <script type="text/javascript" src="src/gf256.js"></script>
+    <script type="text/javascript" src="src/decoder.js"></script>
+    <script type="text/javascript" src="src/qrcode.js"></script>
+    <script type="text/javascript" src="src/findpat.js"></script>
+    <script type="text/javascript" src="src/alignpat.js"></script>
+    <script type="text/javascript" src="src/databr.js"></script>
+    <script type="text/javascript">
+        navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+        canvas = document.createElement("canvas");
+        ctx = canvas.getContext("2d");
+
+        qrcode.callback = function (data) {
+            if (data != "error decoding QR Code") {
+                document.getElementById("decoded_result").innerHTML=data;
+            }
+        };
+
+        var video = document.querySelector("video");
+
+        function startCamera() {
+            navigator.getUserMedia({
+                video: {
+                    facingMode: {
+                        exact: 'environment'
+                    }
+                }
+            }, function (stream) {
+                /*
+                window.URL.createObjectURL = function (stream) {
+                    window.URL.createObjectURL(stream);
+                    */
+                video.src = window.URL.createObjectURL(stream);
+            },function (inp) {
+                console.log("hey"+inp);
+            });
+        };
+
+        function takeCapture() {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            //data_url = canvas.toDataURL('image/png');
+            data_url = canvas.toDataURL('imgs/png');
+            //console.log(data_url);
+            qrcode.decode(data_url);
+        };
+
+        window.onload = startCamera();
+        window.setInterval(function(){
+            takeCapture();
+        }, 2000);
+
+    </script>
+</body>
+</html>
