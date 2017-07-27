@@ -8,13 +8,17 @@
 
     <!-- assets claim that there will be resources ready to be used. -->
     <a-assets >
-        <img id="image" src="imgs/holo.png">
-        <img id="another" src="imgs/another-image.png" >
+      <img id="image" src="imgs/logo.png">
+      <img id="another" src="imgs/another-image.png" >
+      <img id="back" src="imgs/back.png">
+      <img id="top" src="imgs/top.png" >
+      <img id="bottom" src="imgs/bottom.png">
+      <img id="holo" src="imgs/holo.png" >
     </a-assets>
 
 
     <!-- Textured plane parallel to ground. -->
-    <a-plane src="#image" height=3 width=3 rotation="-90 0 0"></a-plane>
+    <a-plane src="#holo" height=2 width=2 rotation="-90 0 0"></a-plane>
 
 
     <!--
@@ -25,7 +29,10 @@
     -->
 
 
+    <!--
     <a-marker-camera preset='hiro'></a-marker-camera>
+    -->
+    <a-marker-camera preset='kanji'></a-marker-camera>
 
 </a-scene>
 </body>
